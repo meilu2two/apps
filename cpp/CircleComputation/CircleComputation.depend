@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1439935736 source:c:\codeblocks_projekte\circlecomputation\circle.cpp
+	<iostream>
+	"circle.h"
+
+1439935736 c:\codeblocks_projekte\circlecomputation\circle.h
+	"point.h"
+
+1439935651 c:\codeblocks_projekte\circlecomputation\point.h
+
+1439934647 source:c:\codeblocks_projekte\circlecomputation\main.cpp
+	<iostream>
+	"point.h"
+	"circle.h"
+
+1439935736 source:c:\codeblocks_projekte\circlecomputation\point.cpp
+	<iostream>
+	"point.h"
+
