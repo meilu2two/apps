@@ -17,3 +17,21 @@
 	<iostream>
 	"point.h"
 
+1440021089 source:c:\git\apps\cpp\circlecomputation\circle.cpp
+	<iostream>
+	"circle.h"
+
+1440021145 c:\git\apps\cpp\circlecomputation\circle.h
+	"point.h"
+
+1440019269 c:\git\apps\cpp\circlecomputation\point.h
+
+1440021089 source:c:\git\apps\cpp\circlecomputation\main.cpp
+	<iostream>
+	"point.h"
+	"circle.h"
+
+1440019269 source:c:\git\apps\cpp\circlecomputation\point.cpp
+	<iostream>
+	"point.h"
+

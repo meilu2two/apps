@@ -14,5 +14,8 @@ int main()
     c1.printcoordinates();
     c2.printcoordinates();
 
+    // output circle data by stream operator
+    cout << c1 << c2;
+
     return 0;
 }

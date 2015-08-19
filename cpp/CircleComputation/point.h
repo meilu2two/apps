@@ -4,10 +4,10 @@ class point
 {
     public:
         point( int t_x, int t_y );
-        void printcoordinates();
+        void printcoordinates() const;
 
-        int getX();
-        int getY();
+        int getX() const;
+        int getY() const;
 
     private:
         int m_x;
