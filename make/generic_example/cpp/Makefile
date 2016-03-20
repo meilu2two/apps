@@ -7,7 +7,7 @@ CXXFLAGS = -Wall # c++-compiler flags
 CPPFLAGS = # c-preprocessor flags 
 LDFLAGS = -lpng -lz # linker flags, for example link libpng and zlib
 
-myprog: $(obj)
+executable: $(obj)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 # Automatic Variables 
 # $@ ... the file name of the target of the rule
@@ -15,5 +15,5 @@ myprog: $(obj)
 
 .PHONY: clean
 clean:
-	rm -f $(obj) myprog
+	rm -f $(obj) executable
 
