@@ -1,3 +1,3 @@
 #!/bin/sh
 
-screen -dmS my_app_in_screen ./endless_echo.sh
+screen -dmS my_app ./endless_echo.sh
