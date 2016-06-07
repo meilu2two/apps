@@ -19,8 +19,7 @@ int main()
     // Use STL iterator to access the values in the container
     TContainer::iterator a_iter = a_vector.begin();
     while( a_iter != a_vector.end() ){
-        std::cout << "STL-style get: " << *a_iter <<  std::endl;
-        ++a_iter;
+        std::cout << "STL-style get: " << *a_iter++ <<  std::endl;
     }
     return 0;
 }
