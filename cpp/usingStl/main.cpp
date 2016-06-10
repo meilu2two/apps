@@ -2,6 +2,14 @@
 #include <vector>
 #include <deque>
 #include <list>
+#include <algorithm>
+
+struct generateEquiValues {
+  int m_workingValue;
+  int m_distance;
+  generateEquiValues( int t_startValue, int t_distance ):m_workingValue( t_startValue ), m_distance( t_distance ) {}
+  int operator()() {return m_workingValue += m_distance;}
+};
  
 int main()
 {
@@ -19,8 +27,18 @@ int main()
     // Use STL iterator to access the values in the container
     TContainer::iterator a_iter = a_vector.begin();
     while( a_iter != a_vector.end() ){
-        std::cout << "STL-style get: " << *a_iter++ <<  std::endl;
+        std::cout << "STL-style get: " << *a_iter++ << std::endl;
     }
+
+	// Fill vector with equidistant values
+    TContainer a_equiVector(10, 0);
+    std::generate( a_equiVector.begin(), a_equiVector.end(), generateEquiValues( 55, 100 ) );
+    TContainer::iterator a_equiIter = a_equiVector.begin();
+	int a_counter(0);
+    while( a_equiIter != a_equiVector.end() ){
+		std::cout << "Equidistant vector[" << a_counter++ << "] = " << *a_equiIter++ << std::endl;
+    }
+
     return 0;
 }
 
