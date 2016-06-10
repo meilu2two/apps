@@ -30,13 +30,13 @@ int main()
         std::cout << "STL-style get: " << *a_iter++ << std::endl;
     }
 
-	// Fill vector with equidistant values
+    // Fill vector with equidistant values
     TContainer a_equiVector(10, 0);
     std::generate( a_equiVector.begin(), a_equiVector.end(), generateEquiValues( 55, 100 ) );
     TContainer::iterator a_equiIter = a_equiVector.begin();
 	int a_counter(0);
     while( a_equiIter != a_equiVector.end() ){
-		std::cout << "Equidistant vector[" << a_counter++ << "] = " << *a_equiIter++ << std::endl;
+        std::cout << "Equidistant vector[" << a_counter++ << "] = " << *a_equiIter++ << std::endl;
     }
 
     return 0;
