@@ -3,6 +3,7 @@
 #include <deque>
 #include <list>
 #include <algorithm>
+#include "complexClass.h"
 
 struct generateEquiValues {
   int m_workingValue;
@@ -38,6 +39,11 @@ int main()
     while( a_equiIter != a_equiVector.end() ){
         std::cout << "Equidistant vector[" << a_counter++ << "] = " << *a_equiIter++ << std::endl;
     }
+
+	// let's test some details of copy constructor
+    complexClass a_testObject( 23 );
+	// complexClass a_secondObject( a_testObject );   // only works with public copy constructor
+	// complexClass a_thirdObject = a_testObject;   // only works with public copy constructor
 
     return 0;
 }
