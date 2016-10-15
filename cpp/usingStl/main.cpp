@@ -45,10 +45,10 @@ int main()
   	// complexClass a_secondObject( a_testObject );   // only works with public copy constructor
   	// complexClass a_thirdObject = a_testObject;   // only works with public copy constructor
 
+    // let's test some details of deep or shallow copy
     a_testObject.printAddress();
-
-    std::vector< complexClass > a_vectorOfComplex(10, a_testObject );
-
+    std::vector< complexClass > a_vectorOfComplex(10, a_testObject );   // is that a deep or shallow copy of a_testObject
+    // print out addresses and content to check deep or shallow copy
     std::vector< complexClass >::iterator a_complIt = a_vectorOfComplex.begin();
     while( a_complIt != a_vectorOfComplex.end() ){
       a_complIt->printAddress();
