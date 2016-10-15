@@ -3,11 +3,12 @@
 class complexClass
 {
 	public:
-		complexClass( int t_base );
+		complexClass();
+
+    void printAddress();
 
 	private:
-		complexClass( const complexClass& );  // hidden copy-constructor
+		// complexClass( const complexClass& );  // hidden copy-constructor
 		int m_baseTypeVar;
 		std::vector<int> m_complexTypeVar;
 };
-
