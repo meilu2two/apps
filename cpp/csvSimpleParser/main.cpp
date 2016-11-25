@@ -130,6 +130,37 @@ bool makeDir( std::string t_folderName )
     return( r_state );
 }
 
+
+bool makePath( std::string t_pathName )
+{
+    bool r_state( false );
+    size_t a_prePos = 0, a_slashPos = 0;
+    std::string a_subFolderName;
+
+    // add trailing slash if missing, so we can use one loop
+    if( t_pathName[ t_pathName.size() - 1 ] != '/' ){
+        t_pathName += '/';
+    }
+
+    while( ( a_slashPos=t_pathName.find_first_of( '/', a_prePos ) ) != std::string::npos ){
+        a_subFolderName = t_pathName.substr( 0, a_slashPos++ );   // get substring, increment to parse next time one character after slash position
+        a_prePos = a_slashPos;   // store current position for next parse
+
+        // if first character is '/', first time length is 0
+        if( a_subFolderName.size() == 0 ) continue;
+
+        // make subfolder
+        if( makeDir( a_subFolderName )){
+            r_state = true;
+        }
+        else{
+          r_state = false;
+        }
+    }
+
+    return( r_state );
+}
+
 /// This function writes data to file
 std::string writeFile( std::string t_foldername, std::string t_filename )
 {
@@ -141,7 +172,7 @@ std::string writeFile( std::string t_foldername, std::string t_filename )
 
     bool a_dirExists( false );
     if( !isDirExistent( t_foldername ) ){
-        a_dirExists = makeDir( t_foldername );
+        a_dirExists = makePath( t_foldername );
     }
     else {
         a_dirExists = true;
@@ -257,7 +288,7 @@ int main()
     std::stringstream a_foldername;
     a_foldername.str( std::string() );
     a_foldername.clear();
-    a_foldername << getDate() << "_" << getTime() << "_CalibrationData/";
+    a_foldername << "calibrationData" << "/" << getDate() << "_" << getTime() << "/";
     std::cout << "Folder: " << a_foldername.str() << std::endl;
 
     std::stringstream a_filename;
