@@ -114,24 +114,24 @@ bool isDirExistent( std::string t_folderName )
 }
 
 /// creates directory on file system
-bool makeDir( std::string t_folderName )
+bool makeSubDir( std::string t_subFolderName )
 {
     bool r_state( false );
 
-    if( 0 == mkdir( t_folderName.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH ) ) {   // 0 ... make dir successful, -1 ... make dir failed
+    if( 0 == mkdir( t_subFolderName.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH ) ) {   // 0 ... make dir successful, -1 ... make dir failed
             r_state = true;
-            // std::cout << "Create successfully folder: " << t_folderName.c_str() << std::endl;   // Debug output
+            // std::cout << "Create successfully subfolder: " << t_subFolderName.c_str() << std::endl;   // Debug output
         }
     else {
         r_state = false;
-        std::cout << "Creating folder '" << t_folderName.c_str() << "' failed! (errno=" << errno << " -> " << strerror(errno) << ")" << std::endl;   // Debug output
+        std::cout << "Creating subfolder '" << t_subFolderName.c_str() << "' failed! (errno=" << errno << " -> " << strerror(errno) << ")" << std::endl;   // Debug output
     }
 
     return( r_state );
 }
 
 
-bool makePath( std::string t_pathName )
+bool makeDir( std::string t_pathName )
 {
     bool r_state( false );
     size_t a_prePos = 0, a_slashPos = 0;
@@ -150,12 +150,7 @@ bool makePath( std::string t_pathName )
         if( a_subFolderName.size() == 0 ) continue;
 
         // make subfolder
-        if( makeDir( a_subFolderName )){
-            r_state = true;
-        }
-        else{
-          r_state = false;
-        }
+        r_state = makeSubDir( a_subFolderName );
     }
 
     return( r_state );
@@ -172,7 +167,7 @@ std::string writeFile( std::string t_foldername, std::string t_filename )
 
     bool a_dirExists( false );
     if( !isDirExistent( t_foldername ) ){
-        a_dirExists = makePath( t_foldername );
+        a_dirExists = makeDir( t_foldername );
     }
     else {
         a_dirExists = true;
