@@ -1,3 +1,4 @@
+#include "fs_io.h"
 #include <iostream>
 #include <sys/stat.h>
 #include <dirent.h>

@@ -1,11 +1,10 @@
+#include "fs_io.h"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
-
-#include "fs_io.h"
 
 /// A data point
 struct CenterPoint
