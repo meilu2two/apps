@@ -55,8 +55,13 @@ if [ "on" = $runBench ]; then
    echo "Architecture type: $architectureType"
    echo "Number of threads: $numberOfThreads" 
    make PORT_DIR=linux$architectureType REBUILD=1 XCFLAGS="-DMULTITHREAD=$numberOfThreads -DUSE_PTHREAD"
-   cp run1.log ../run1_"$numberOfThreads"threads.log
-   cp run2.log ../run2_"$numberOfThreads"threads.log
+   if [ "1" = $numberOfThreads ]; then
+      cp run1.log ../run1_"$numberOfThreads"thread.log
+      cp run2.log ../run2_"$numberOfThreads"thread.log
+   else
+      cp run1.log ../run1_"$numberOfThreads"threads.log
+      cp run2.log ../run2_"$numberOfThreads"threads.log
+   fi
 else
    if [ "on" = $clean ]; then
       echo "make clean:"
