@@ -4,7 +4,6 @@
 
 echo "Caller Skript for CoreMark benchmark:'"
 
-# output all command line options
 coreMarkLocation="./coremark_v1.0"
 numberOfThreads="1"
 architectureType="64"
@@ -12,44 +11,44 @@ clean="off"
 check="off"
 runBench="on"
 
-cd $coreMarkLocation #enter coremark directory
-
-while getopts ':chkt:x:' OPTION ; do
+# ----- Processing options and associated arguments -----
+while getopts ':chkl:t:' OPTION ; do
   case "$OPTION" in
     c) clean="on"
        runBench="off"
     ;;
     h) echo "The following commands are provided:"
+       echo "      ... without options executes benchmark with 1 thread on 64-bit system"
        echo "-c    ... make clean"
        echo "-k    ... make check"
        echo "-l32  ... Execute CoreMark on linux 32-bit system"
        echo "-t N  ... Multithread mode: Execute CoreMark with N threads in parallel."
-       runBench="off"
+       exit 1
     ;;
     k) check="on"
        runBench="off"
     ;;
     l) if [ "32" = $OPTARG ]; then
-          echo "make on 32-bit architecture" 
           architectureType=""
        else
-          echo make on 64-bit architecture
           architectureType="64"
        fi
     ;;
-    t) echo "make with $OPTARG threads"
-       numberOfThreads=$OPTARG
+    t) numberOfThreads=$OPTARG
     ;;
     \?) echo "unknown option: -$OPTARG"
         echo "Try '$0 -h' for more information"
-        runBench="off"
+        exit 2
     ;;
     :) echo "Oprion -$OPTARG requires an argument"
-       runbench="off"
+       exit 3
     ;; 
   esac
 done
+# ----- Processing end -----
 
+# ***** Executing Benchmark *****
+cd $coreMarkLocation #enter coremark directory
 
 if [ "on" = $runBench ]; then
    echo "RUN COREMARK BENCHMARK!" 
@@ -70,4 +69,6 @@ else
 fi
 
 cd .. #leave coremark directory
+# ***** Executing end *****
 
+exit 0
