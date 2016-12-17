@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # lightweight script to execute CoreMark benchmark
 # CoreMark must be locatet in $coreMarkLocation
 
@@ -10,7 +10,7 @@ architectureType="64"
 clean="off"
 check="off"
 runBench="on"
-multiRunModewithMaxThreads="1";
+multiRunModeWithMaxThreads="1";
 
 # ----- Processing options and associated arguments -----
 while getopts ':chkl:m:t:' OPTION ; do
@@ -23,6 +23,7 @@ while getopts ':chkl:m:t:' OPTION ; do
        echo "-c    ... make clean"
        echo "-k    ... make check"
        echo "-l32  ... Execute CoreMark on linux 32-bit system"
+       echo "-m N  ... Multi run mode: Execute CoreMark several times from 1 to N threads."
        echo "-t N  ... Multithread mode: Execute CoreMark with N threads in parallel."
        exit 1
     ;;
@@ -35,7 +36,7 @@ while getopts ':chkl:m:t:' OPTION ; do
           architectureType="64"
        fi
     ;;
-    m) multiRunModewithMaxThreads=$(($OPTARG))
+    m) multiRunModeWithMaxThreads=$OPTARG
     ;;
     t) numberOfThreads=$OPTARG
     ;;
@@ -73,7 +74,18 @@ executeBench() {
 cd $coreMarkLocation #enter coremark directory
 
 if [ "on" = $runBench ]; then
+   if [ "1" = $multiRunModeWithMaxThreads ]; then
       executeBench $architectureType $numberOfThreads
+   else
+      array=( 1 2 4 6 8 12 16 24 32 48 64 128 )
+      for nrOfThreads in ${array[*]}
+      do
+         if [ $nrOfThreads -le $multiRunModeWithMaxThreads ]; then
+            #echo $nrOfThreads
+            executeBench $architectureType $nrOfThreads
+         fi
+      done 
+   fi
 else
    if [ "on" = $clean ]; then
       echo "make clean:"
