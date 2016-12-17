@@ -10,9 +10,10 @@ architectureType="64"
 clean="off"
 check="off"
 runBench="on"
+multiRunModewithMaxThreads="1";
 
 # ----- Processing options and associated arguments -----
-while getopts ':chkl:t:' OPTION ; do
+while getopts ':chkl:m:t:' OPTION ; do
   case "$OPTION" in
     c) clean="on"
        runBench="off"
@@ -34,6 +35,8 @@ while getopts ':chkl:t:' OPTION ; do
           architectureType="64"
        fi
     ;;
+    m) multiRunModewithMaxThreads=$(($OPTARG))
+    ;;
     t) numberOfThreads=$OPTARG
     ;;
     \?) echo "unknown option: -$OPTARG"
@@ -48,20 +51,29 @@ done
 # ----- Processing end -----
 
 # ***** Executing Benchmark *****
+
+executeBench() {
+   archType=$1
+   nrOfThreads=$2
+
+   echo "RUN COREMARK BENCHMARK!" 
+   echo "Architecture type: $archType"
+   echo "Number of threads: $nrOfThreads" 
+
+   make PORT_DIR=linux$archType REBUILD=1 XCFLAGS="-DMULTITHREAD=$nrOfThreads -DUSE_PTHREAD"
+   if [ "1" = $nrOfThreads ]; then
+      cp run1.log ../run1_"$nrOfThreads"thread.log
+      cp run2.log ../run2_"$nrOfThreads"thread.log
+   else
+      cp run1.log ../run1_"$nrOfThreads"threads.log
+      cp run2.log ../run2_"$nrOfThreads"threads.log
+   fi
+}
+
 cd $coreMarkLocation #enter coremark directory
 
 if [ "on" = $runBench ]; then
-   echo "RUN COREMARK BENCHMARK!" 
-   echo "Architecture type: $architectureType"
-   echo "Number of threads: $numberOfThreads" 
-   make PORT_DIR=linux$architectureType REBUILD=1 XCFLAGS="-DMULTITHREAD=$numberOfThreads -DUSE_PTHREAD"
-   if [ "1" = $numberOfThreads ]; then
-      cp run1.log ../run1_"$numberOfThreads"thread.log
-      cp run2.log ../run2_"$numberOfThreads"thread.log
-   else
-      cp run1.log ../run1_"$numberOfThreads"threads.log
-      cp run2.log ../run2_"$numberOfThreads"threads.log
-   fi
+      executeBench $architectureType $numberOfThreads
 else
    if [ "on" = $clean ]; then
       echo "make clean:"
