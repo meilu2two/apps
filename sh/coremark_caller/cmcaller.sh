@@ -2,7 +2,7 @@
 # lightweight script to execute CoreMark benchmark
 # CoreMark must be locatet in $coreMarkLocation
 
-echo "Caller Skript for CoreMark benchmark:'"
+echo "Caller script for CoreMark benchmark: $0"
 
 coreMarkLocation="./coremark_v1.0"
 numberOfThreads="1"
@@ -13,18 +13,22 @@ runBench="on"
 multiRunModeWithMaxThreads="1";
 
 # ----- Processing options and associated arguments -----
-while getopts ':chkl:m:t:' OPTION ; do
+while getopts ':a:chkl:t:' OPTION ; do
   case "$OPTION" in
+    a) multiRunModeWithMaxThreads=$OPTARG
+    ;;
     c) clean="on"
        runBench="off"
     ;;
     h) echo "The following commands are provided:"
        echo "      ... without options executes benchmark with 1 thread on 64-bit system"
+       echo "-a N  ... auto multi run mode: Execute CoreMark several times from 1 to N threads."
        echo "-c    ... make clean"
        echo "-k    ... make check"
        echo "-l32  ... Execute CoreMark on linux 32-bit system"
-       echo "-m N  ... Multi run mode: Execute CoreMark several times from 1 to N threads."
        echo "-t N  ... Multithread mode: Execute CoreMark with N threads in parallel."
+       echo "Example:"
+       echo "$0 -a8 ... executes CoreMark in auto multi run mode several times from 1 to 8 threads."
        exit 1
     ;;
     k) check="on"
@@ -35,8 +39,6 @@ while getopts ':chkl:m:t:' OPTION ; do
        else
           architectureType="64"
        fi
-    ;;
-    m) multiRunModeWithMaxThreads=$OPTARG
     ;;
     t) numberOfThreads=$OPTARG
     ;;
@@ -77,7 +79,7 @@ if [ "on" = $runBench ]; then
    if [ "1" = $multiRunModeWithMaxThreads ]; then
       executeBench $architectureType $numberOfThreads
    else
-      array=( 1 2 4 6 8 12 16 24 32 48 64 128 )
+      array=( 1 2 4 6 8 10 12 16 20 24 32 48 64 128 )
       for nrOfThreads in ${array[*]}
       do
          if [ $nrOfThreads -le $multiRunModeWithMaxThreads ]; then
@@ -85,11 +87,13 @@ if [ "on" = $runBench ]; then
             executeBench $architectureType $nrOfThreads
          fi
       done 
+      tar cfvz logfiles.tar.gz *.log #make archive of log files
    fi
 else
    if [ "on" = $clean ]; then
       echo "make clean:"
       make PORT_DIR=linux$architectureType clean
+      rm -f ../*.log #delete local log files, which created by this script
    fi
    if [ "on" = $check ]; then
       echo "make check:"
