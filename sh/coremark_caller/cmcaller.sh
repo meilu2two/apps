@@ -78,7 +78,6 @@ cd $coreMarkLocation #enter coremark directory
 if [ "on" = $runBench ]; then
    if [ "1" = $multiRunModeWithMaxThreads ]; then
       executeBench $architectureType $numberOfThreads
-      tar cfvz ../logfiles.tar.gz ../*.log #make archive of log files
    else
       array=( 1 2 4 6 8 10 12 16 20 24 32 48 64 128 )
       for nrOfThreads in ${array[*]}
@@ -88,8 +87,9 @@ if [ "on" = $runBench ]; then
             executeBench $architectureType $nrOfThreads
          fi
       done 
-      tar cfvz ../logfiles.tar.gz ../*.log #make archive of log files
    fi
+   ../sysinfo.sh > ../sysinfo.log #collect system information
+   tar cfvz ../logfiles.tar.gz ../*.log #make archive of log files
 else
    if [ "on" = $clean ]; then
       echo "make clean:"
