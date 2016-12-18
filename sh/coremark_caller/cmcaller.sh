@@ -95,6 +95,7 @@ else
       echo "make clean:"
       make PORT_DIR=linux$architectureType clean
       rm -f ../*.log #delete local log files, which created by this script
+      rm -f ../*.tar.gz #delete local archives, which created by this script
    fi
    if [ "on" = $check ]; then
       echo "make check:"
