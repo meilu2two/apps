@@ -87,7 +87,7 @@ if [ "on" = $runBench ]; then
             executeBench $architectureType $nrOfThreads
          fi
       done 
-      tar cfvz logfiles.tar.gz *.log #make archive of log files
+      tar cfvz ../logfiles.tar.gz ../*.log #make archive of log files
    fi
 else
    if [ "on" = $clean ]; then
