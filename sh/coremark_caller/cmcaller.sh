@@ -77,14 +77,14 @@ cd $coreMarkLocation #enter coremark directory
 
 if [ "on" = $runBench ]; then
    if [ "1" = $multiRunModeWithMaxThreads ]; then
-      executeBench $architectureType $numberOfThreads
+      executeBench "$architectureType" "$numberOfThreads"
    else
       array=( 1 2 4 6 8 10 12 16 20 24 32 48 64 128 )
       for nrOfThreads in ${array[*]}
       do
          if [ $nrOfThreads -le $multiRunModeWithMaxThreads ]; then
             #echo $nrOfThreads
-            executeBench $architectureType $nrOfThreads
+            executeBench "$architectureType" "$nrOfThreads"
          fi
       done 
    fi
