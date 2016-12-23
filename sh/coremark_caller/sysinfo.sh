@@ -23,6 +23,10 @@ echo "Info@: -------------------- df -h --------------------"
 df -h
 echo -e
 
+echo "Info@: -------------------- ls -al /sys/class/tty/tty*/device/driver --------------------"
+ls -al /sys/class/tty/tty*/device/driver
+echo -e
+
 echo "Info@: -------------------- lsmod --------------------"
 lsmod
 echo -e
@@ -33,6 +37,10 @@ echo -e
 
 echo "Info@: -------------------- lspci --------------------"
 lspci
+echo -e
+
+echo "Info@: -------------------- lspci -v --------------------"
+lspci -v
 echo -e
 
 echo "Info@: -------------------- lscpu --------------------"
@@ -49,6 +57,10 @@ echo -e
 
 echo "Info@: -------------------- lshw --------------------"
 lshw
+echo -e
+
+echo "Info@: -------------------- dmesg --------------------"
+dmesg
 echo -e
 
 exit 0
